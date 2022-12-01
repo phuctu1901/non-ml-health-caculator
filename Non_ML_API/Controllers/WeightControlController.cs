@@ -1,6 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
+using System;
+using System.IO;
 using System.Numerics;
 using System.Reflection;
+using System.Web;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Non_ML_API.Controllers
 {
@@ -32,7 +37,11 @@ namespace Non_ML_API.Controllers
             // height in meter, weight in kg
             double BMI;
             BMI = weight / (height * height);
-            return Ok(new { index = new { BMI = Math.Round(BMI, 2) } });
+
+            var html = System.IO.File.ReadAllText(@"./assets/html_templates/bmi.html");
+            html = html.Replace("{{bmi}}", Math.Round(BMI, 2).ToString());
+            string myEncodedString = HttpUtility.HtmlEncode(html);
+            return Ok(new { index = new { BMI = Math.Round(BMI, 2) }, extra_data = myEncodedString } );
         }
 
 
