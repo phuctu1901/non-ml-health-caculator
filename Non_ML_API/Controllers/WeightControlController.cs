@@ -36,7 +36,7 @@ namespace Non_ML_API.Controllers
         {
             // height in meter, weight in kg
             double BMI;
-            BMI = weight / (height * height);
+            BMI = weight / (height/100 * height);
 
             var html = System.IO.File.ReadAllText(@"./assets/html_templates/bmi.html");
             html = html.Replace("{{bmi}}", Math.Round(BMI, 2).ToString());
