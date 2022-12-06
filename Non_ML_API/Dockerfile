@@ -17,6 +17,8 @@ FROM build AS publish
 RUN dotnet publish "Non_ML_API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
+WORKDIR /app/assets
+COPY ./Non_ML_API/assets ./
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Non_ML_API.dll"]

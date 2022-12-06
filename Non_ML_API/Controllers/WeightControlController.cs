@@ -38,7 +38,7 @@ namespace Non_ML_API.Controllers
             double BMI;
             BMI = weight / (height/100 * height);
 
-            var html = System.IO.File.ReadAllText(@"./assets/html_templates/bmi.html");
+            var html = System.IO.File.ReadAllText("./assets/html_templates/bmi.html");
             html = html.Replace("{{bmi}}", Math.Round(BMI, 2).ToString());
             string myEncodedString = HttpUtility.HtmlEncode(html);
             return Ok(new { index = new { BMI = Math.Round(BMI, 2) }, extra_data = myEncodedString } );
